@@ -1,0 +1,1131 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#101e3a">
+    <title>LoanDesk — Admin Portal</title>
+    <style>
+        :root {
+            --navy: #101e3a;
+            --navy2: #1e3557;
+            --teal: #10b7a4;
+            --teald: #087f76;
+            --bg: #f3f6fb;
+            --ink: #192740;
+            --muted: #78869b;
+            --line: #e5eaf1;
+            --white: #fff;
+            --shadow: 0 14px 45px #1b30530d;
+            --amber: #a2670a;
+            --red: #b72e42;
+            --green: #10825c
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+            color: var(--ink)
+        }
+
+        .top {
+            height: 72px;
+            background: #fff;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            position: sticky;
+            top: 0;
+            z-index: 10
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 19px;
+            font-weight: 850;
+            letter-spacing: -.5px;
+            color: var(--navy)
+        }
+
+        .mark {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #17375d, #10b9a5);
+            color: white;
+            display: grid;
+            place-items: center
+        }
+
+        .admin-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .avatar {
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            background: #e2f6f2;
+            color: #078f83;
+            display: grid;
+            place-items: center;
+            font-weight: 900
+        }
+
+        .shell {
+            max-width: 1380px;
+            margin: 26px auto;
+            padding: 0 24px
+        }
+
+        .login-wrap {
+            max-width: 500px;
+            margin: 60px auto
+        }
+
+        .login-card,
+        .card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 19px;
+            box-shadow: var(--shadow)
+        }
+
+        .login-card {
+            padding: 32px
+        }
+
+        .eyebrow {
+            font-size: 10px;
+            letter-spacing: 1.7px;
+            text-transform: uppercase;
+            color: var(--teald);
+            font-weight: 900
+        }
+
+        .h1 {
+            font-size: 26px;
+            letter-spacing: -.8px;
+            margin: 9px 0 6px
+        }
+
+        .muted {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6
+        }
+
+        .field {
+            margin: 19px 0
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            color: #526079;
+            margin-bottom: 8px
+        }
+
+        .input,
+        select,
+        textarea {
+            width: 100%;
+            font: inherit;
+            font-size: 13px;
+            border: 1px solid #dce3ed;
+            border-radius: 11px;
+            padding: 12px 13px;
+            background: #fbfcfe;
+            color: var(--ink);
+            outline: none
+        }
+
+        .input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--teal);
+            box-shadow: 0 0 0 3px #10b7a414
+        }
+
+        .btn {
+            border: 0;
+            cursor: pointer;
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 14px;
+            border-radius: 10px;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 850;
+            transition: .16s
+        }
+
+        .btn:hover {
+            transform: translateY(-1px)
+        }
+
+        .primary {
+            color: white;
+            background: linear-gradient(130deg, #12b8a6, #078f83);
+            box-shadow: 0 7px 16px #10b7a424
+        }
+
+        .dark {
+            color: white;
+            background: var(--navy)
+        }
+
+        .soft {
+            color: #087e73;
+            background: #e9f7f4
+        }
+
+        .ghost {
+            color: #5d6a7e;
+            background: #fff;
+            border: 1px solid var(--line)
+        }
+
+        .danger {
+            color: #ae2e41;
+            background: #fff0f2
+        }
+
+        .full {
+            width: 100%
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 235px minmax(0, 1fr);
+            gap: 23px
+        }
+
+        .side {
+            align-self: start;
+            background: var(--navy);
+            border-radius: 18px;
+            color: white;
+            padding: 20px 12px;
+            position: sticky;
+            top: 92px
+        }
+
+        .side-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #91a6c0;
+            letter-spacing: 1.4px;
+            font-weight: 900;
+            padding: 6px 12px 14px
+        }
+
+        .nav-btn {
+            display: flex;
+            width: 100%;
+            text-align: left;
+            align-items: center;
+            gap: 11px;
+            padding: 12px 12px;
+            border-radius: 11px;
+            border: 0;
+            background: transparent;
+            color: #c0cddf;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 750;
+            cursor: pointer;
+            margin: 3px 0
+        }
+
+        .nav-btn .ico {
+            width: 20px;
+            text-align: center;
+            font-size: 15px
+        }
+
+        .nav-btn.active,
+        .nav-btn:hover {
+            background: #ffffff15;
+            color: #fff
+        }
+
+        .side-bottom {
+            border-top: 1px solid #ffffff20;
+            margin-top: 20px;
+            padding: 17px 10px 4px;
+            color: #9fb1c8;
+            font-size: 10px;
+            line-height: 1.7
+        }
+
+        .page-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 14px;
+            margin: 2px 0 21px
+        }
+
+        .page-head h1 {
+            margin: 0 0 6px;
+            font-size: 25px;
+            letter-spacing: -.7px
+        }
+
+        .page-head p {
+            margin: 0
+        }
+
+        .head-actions {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 18px
+        }
+
+        .stat {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: var(--shadow)
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 800
+        }
+
+        .stat-ico {
+            width: 31px;
+            height: 31px;
+            border-radius: 10px;
+            background: #ecf8f6;
+            color: #078f83;
+            display: grid;
+            place-items: center
+        }
+
+        .stat-value {
+            font-size: 27px;
+            letter-spacing: -1px;
+            font-weight: 900;
+            margin-top: 15px;
+            color: var(--navy)
+        }
+
+        .stat-foot {
+            font-size: 10px;
+            color: #8a96a8;
+            margin-top: 5px
+        }
+
+        .card {
+            overflow: hidden
+        }
+
+        .card-head {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .card-head h3 {
+            font-size: 14px;
+            margin: 0;
+            letter-spacing: -.2px
+        }
+
+        .card-head p {
+            font-size: 11px;
+            color: var(--muted);
+            margin: 5px 0 0
+        }
+
+        .card-body {
+            padding: 19px 20px
+        }
+
+        .table-tools {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            flex-wrap: wrap
+        }
+
+        .table-tools select,
+        .table-tools input {
+            width: auto;
+            min-width: 150px;
+            padding: 9px 10px;
+            font-size: 11px
+        }
+
+        .table-wrap {
+            overflow: auto
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            white-space: nowrap
+        }
+
+        th {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: #8190a6;
+            text-align: left;
+            padding: 12px 15px;
+            background: #fbfcfe;
+            border-bottom: 1px solid var(--line)
+        }
+
+        td {
+            font-size: 12px;
+            color: #46546b;
+            padding: 14px 15px;
+            border-bottom: 1px solid #eef1f6
+        }
+
+        tr:last-child td {
+            border-bottom: 0
+        }
+
+        tbody tr:hover {
+            background: #fbfdfd
+        }
+
+        .id {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 10px;
+            color: #66778f
+        }
+
+        .status {
+            display: inline-flex;
+            border-radius: 999px;
+            padding: 6px 9px;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: .45px;
+            font-weight: 900;
+            background: #fff4df;
+            color: #996008
+        }
+
+        .status.approved {
+            background: #e3f8ee;
+            color: #0b8058
+        }
+
+        .status.rejected {
+            background: #ffebee;
+            color: #b22e42
+        }
+
+        .status.needs_information {
+            background: #edf2ff;
+            color: #4357a9
+        }
+
+        .empty {
+            text-align: center;
+            padding: 42px 20px;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .empty-ico {
+            font-size: 29px;
+            margin-bottom: 11px
+        }
+
+        .kpi {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: #f6fafc;
+            border: 1px solid #eaf0f5;
+            border-radius: 12px;
+            padding: 14px;
+            color: #63728a;
+            font-size: 11px;
+            line-height: 1.65
+        }
+
+        .kpi strong {
+            color: #30415b
+        }
+
+        .notice {
+            font-size: 11px;
+            color: #6e7f94;
+            line-height: 1.7;
+            background: #f4faf9;
+            border: 1px solid #dff0ed;
+            padding: 13px;
+            border-radius: 12px;
+            margin-top: 12px
+        }
+
+        .search {
+            position: relative
+        }
+
+        .search input {
+            padding-left: 32px
+        }
+
+        .search span {
+            position: absolute;
+            top: 9px;
+            left: 11px;
+            color: #8593a8
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .field small {
+            display: block;
+            color: #8d98a9;
+            font-size: 10px;
+            margin-top: 7px
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            padding: 13px 17px;
+            border-radius: 12px;
+            color: #fff;
+            background: #172844;
+            opacity: 0;
+            pointer-events: none;
+            transition: .2s;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            font-size: 12px;
+            max-width: calc(100vw - 30px)
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0)
+        }
+
+        .toast.error {
+            background: #9f2938
+        }
+
+        .modal-bg {
+            position: fixed;
+            inset: 0;
+            background: #0b172b99;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 18px;
+            width: min(900px, 100%);
+            max-height: 92vh;
+            overflow: auto;
+            box-shadow: 0 25px 80px #06152d44
+        }
+
+        .modal-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 22px 24px;
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 2
+        }
+
+        .modal-top h2 {
+            margin: 4px 0;
+            font-size: 21px
+        }
+
+        .modal-content {
+            padding: 22px 24px
+        }
+
+        .modal-close {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+            font-size: 18px;
+            width: 35px;
+            height: 35px;
+            cursor: pointer
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .detail {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 13px
+        }
+
+        .detail .key {
+            font-size: 10px;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            color: #8390a3;
+            font-weight: 850
+        }
+
+        .detail .value {
+            font-size: 13px;
+            font-weight: 750;
+            word-break: break-word;
+            margin-top: 7px
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 16px
+        }
+
+        .doc-box {
+            background: #f7f9fc;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            overflow: hidden
+        }
+
+        .doc-box h4 {
+            margin: 0;
+            padding: 12px 14px;
+            font-size: 12px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .doc-box img {
+            display: block;
+            max-width: 100%;
+            max-height: 290px;
+            object-fit: contain;
+            margin: 12px auto
+        }
+
+        .review-area {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid var(--line)
+        }
+
+        .review-area label {
+            font-size: 11px;
+            display: block;
+            font-weight: 800;
+            color: #5b6a81;
+            margin: 0 0 7px
+        }
+
+        .review-area textarea {
+            min-height: 70px;
+            resize: vertical
+        }
+
+        .review-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 12px 0
+        }
+
+        .review-controls label {
+            display: block
+        }
+
+        .review-controls select,
+        .review-controls input {
+            margin-top: 7px
+        }
+
+        .inline-note {
+            font-size: 10px;
+            line-height: 1.6;
+            color: #8793a6
+        }
+
+        .flag {
+            display: inline-block;
+            color: #85600d;
+            background: #fff5dc;
+            border-radius: 7px;
+            padding: 5px 7px;
+            font-size: 9px;
+            font-weight: 850
+        }
+
+        .reveal-box {
+            margin-top: 12px;
+            padding: 14px;
+            background: #fff8e9;
+            border: 1px solid #f5e2b8;
+            border-radius: 12px;
+            font-size: 12px;
+            line-height: 1.7;
+            word-break: break-word
+        }
+
+        .setting-panel {
+            max-width: 700px
+        }
+
+        .setting-amount {
+            font-size: 31px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: var(--navy)
+        }
+
+        .footer-note {
+            font-size: 10px;
+            color: #8b96a8;
+            margin-top: 20px
+        }
+
+        @media(max-width:1050px) {
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .layout {
+                grid-template-columns: 200px minmax(0, 1fr)
+            }
+        }
+
+        @media(max-width:760px) {
+            .top {
+                padding: 0 16px
+            }
+
+            .shell {
+                padding: 0 12px;
+                margin: 15px auto
+            }
+
+            .layout {
+                display: block
+            }
+
+            .side {
+                position: static;
+                display: flex;
+                overflow: auto;
+                gap: 4px;
+                padding: 8px;
+                border-radius: 13px;
+                margin-bottom: 18px
+            }
+
+            .side-title,
+            .side-bottom {
+                display: none
+            }
+
+            .nav-btn {
+                width: auto;
+                white-space: nowrap;
+                margin: 0;
+                padding: 10px
+            }
+
+            .nav-btn .ico {
+                display: none
+            }
+
+            .page-head {
+                flex-direction: column
+            }
+
+            .stat-grid {
+                gap: 9px
+            }
+
+            .stat {
+                padding: 14px
+            }
+
+            .stat-value {
+                font-size: 23px
+            }
+
+            .card-head {
+                align-items: flex-start;
+                flex-direction: column
+            }
+
+            .two-col,
+            .detail-grid,
+            .doc-grid {
+                grid-template-columns: 1fr
+            }
+
+            .modal-content {
+                padding: 17px
+            }
+
+            .modal-top {
+                padding: 17px
+            }
+
+            .table-wrap {
+                margin: 0 -2px
+            }
+
+            .login-wrap {
+                margin: 24px auto
+            }
+
+            .login-card {
+                padding: 25px
+            }
+        }
+
+        @media(max-width:420px) {
+            .stat-grid {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .stat-foot {
+                min-height: 24px
+            }
+
+            .review-controls {
+                grid-template-columns: 1fr
+            }
+
+            .table-tools>* {
+                width: 100% !important
+            }
+
+            .btn {
+                padding: 10px 11px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="top">
+        <div class="brand">
+            <div class="mark">L</div><span>LoanDesk <span
+                    style="font-weight:500;color:#96a2b5;font-size:11px;margin-left:5px">ADMIN</span></span>
+        </div>
+        <div id="topRight" class="admin-label"><span>Secure operations workspace</span>
+            <div class="avatar">A</div>
+        </div>
+    </header>
+    <div id="loginScreen" class="login-wrap">
+        <section class="login-card">
+            <div class="eyebrow">Administrator access</div>
+            <h1 class="h1">Sign in to LoanDesk</h1>
+            <p class="muted">Manage applications, review identity submissions, and monitor authentication events.</p>
+            <form id="adminLoginForm">
+                <div class="field"><label for="adminUser">Username</label><input id="adminUser" class="input"
+                        autocomplete="username" required placeholder="Admin username"></div>
+                <div class="field"><label for="adminPass">Password</label><input id="adminPass" class="input"
+                        type="password" autocomplete="current-password" required placeholder="Admin password"></div>
+                <button id="adminLoginBtn" class="btn primary full" type="submit">Sign in securely →</button>
+            </form>
+            <div class="notice">Administrator credentials are configured on the server. Never use the default or a
+                shared password in a deployed environment.</div>
+        </section>
+    </div>
+    <main id="appShell" class="shell hidden">
+        <div class="layout">
+            <aside class="side">
+                <div class="side-title">Workspace</div><button class="nav-btn active" data-page="overview"><span
+                        class="ico">▦</span>Overview</button><button class="nav-btn" data-page="applications"><span
+                        class="ico">▤</span>Applications</button><button class="nav-btn" data-page="audit"><span
+                        class="ico">◷</span>OTP audit</button><button class="nav-btn" data-page="settings"><span
+                        class="ico">⚙</span>Settings</button>
+                <div class="side-bottom">LoanDesk admin<br>Customer data is restricted to authorised staff.</div>
+            </aside>
+            <section class="main-content">
+                <section id="overviewPage">
+                    <div class="page-head">
+                        <div>
+                            <h1>Overview</h1>
+                            <p class="muted">A current view of loan requests and verification activity.</p>
+                        </div>
+                        <div class="head-actions"><button class="btn ghost" id="overviewRefresh">↻
+                                Refresh</button><button class="btn dark" id="overviewApplications">View applications
+                                →</button></div>
+                    </div>
+                    <div class="stat-grid">
+                        <div class="stat">
+                            <div class="stat-top">Total applications <span class="stat-ico">▤</span></div>
+                            <div class="stat-value" id="statTotal">—</div>
+                            <div class="stat-foot">All submitted requests</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-top">Under review <span class="stat-ico">◷</span></div>
+                            <div class="stat-value" id="statReview">—</div>
+                            <div class="stat-foot">Requires team attention</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-top">Approved <span class="stat-ico">✓</span></div>
+                            <div class="stat-value" id="statApproved">—</div>
+                            <div class="stat-foot">Manually reviewed</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-top">OTP attempts · 24h <span class="stat-ico">⌑</span></div>
+                            <div class="stat-value" id="statOtp">—</div>
+                            <div class="stat-foot">Attempts; codes are never stored</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">
+                            <div>
+                                <h3>Recent applications</h3>
+                                <p>Open a request to review documents and set its status.</p>
+                            </div><button class="btn soft" id="recentRefresh">Refresh list</button>
+                        </div>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Application</th>
+                                        <th>Mobile</th>
+                                        <th>Status</th>
+                                        <th>Offer ceiling</th>
+                                        <th>Account</th>
+                                        <th>Submitted</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentRows"></tbody>
+                            </table>
+                        </div>
+                        <div class="empty hidden" id="recentEmpty">
+                            <div class="empty-ico">▤</div>No applications have been submitted yet.
+                        </div>
+                    </div>
+                    <div class="footer-note">This portal stores authentication outcomes, not raw OTP values. Financial
+                        and identity data is shown only to authorised administrators.</div>
+                </section>
+                <section id="applicationsPage" class="hidden">
+                    <div class="page-head">
+                        <div>
+                            <h1>Applications</h1>
+                            <p class="muted">Review submitted identity documents and account information.</p>
+                        </div>
+                        <div class="head-actions"><button class="btn ghost" id="exportApps">↓ Export masked
+                                CSV</button><button class="btn primary" id="reloadApps">↻ Refresh</button></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">
+                            <div>
+                                <h3>Application queue</h3>
+                                <p>Exports include masked identifiers only.</p>
+                            </div>
+                            <div class="table-tools"><select id="statusFilter">
+                                    <option value="">All statuses</option>
+                                    <option value="under_review">Under review</option>
+                                    <option value="needs_information">Needs information</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="rejected">Rejected</option>
+                                </select><input id="appSearch" class="input" placeholder="Search ID or masked phone">
+                            </div>
+                        </div>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Application</th>
+                                        <th>Mobile</th>
+                                        <th>Status</th>
+                                        <th>Potential amount</th>
+                                        <th>PAN / ID</th>
+                                        <th>Account</th>
+                                        <th>Submitted</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="appRows"></tbody>
+                            </table>
+                        </div>
+                        <div id="appsEmpty" class="empty hidden">
+                            <div class="empty-ico">⌕</div>No matching applications.
+                        </div>
+                    </div>
+                </section>
+                <section id="auditPage" class="hidden">
+                    <div class="page-head">
+                        <div>
+                            <h1>OTP audit</h1>
+                            <p class="muted">Monitor requests, correct/incorrect attempts and delivery status.</p>
+                        </div>
+                        <div class="head-actions"><button class="btn ghost" id="exportAudit">↓ Export audit
+                                CSV</button><button class="btn primary" id="reloadAudit">↻ Refresh</button></div>
+                    </div>
+                    <div class="kpi">
+                        <div style="font-size:20px">⌑</div>
+                        <div><strong>Authentication secrets are not displayed or stored.</strong><br>For customer
+                            protection, the raw OTP entered by a user and the expected OTP are not written to the
+                            database or exported. Audit records include the masked phone, challenge ID, time, request
+                            outcome and source IP.</div>
+                    </div>
+                    <div class="card" style="margin-top:16px">
+                        <div class="card-head">
+                            <div>
+                                <h3>Recent authentication events</h3>
+                                <p>Latest 100 events.</p>
+                            </div><span class="flag">NO OTP VALUES STORED</span>
+                        </div>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Mobile</th>
+                                        <th>Event</th>
+                                        <th>Result</th>
+                                        <th>Challenge</th>
+                                        <th>IP</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditRows"></tbody>
+                            </table>
+                        </div>
+                        <div id="auditEmpty" class="empty hidden">No authentication events yet.</div>
+                    </div>
+                </section>
+                <section id="settingsPage" class="hidden">
+                    <div class="page-head">
+                        <div>
+                            <h1>Settings</h1>
+                            <p class="muted">Configure the public offer ceiling and review settings.</p>
+                        </div>
+                    </div>
+                    <div class="card setting-panel">
+                        <div class="card-head">
+                            <div>
+                                <h3>Potential finance amount</h3>
+                                <p>This is a maximum marketing ceiling, not a loan promise or an approval.</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="eyebrow">Currently displayed</div>
+                            <div id="currentOffer" class="setting-amount">Up to 50,000</div>
+                            <p class="muted">Customers are told the final amount, terms and eligibility depend on
+                                verification and manual review.</p>
+                            <form id="offerForm">
+                                <div class="field"><label for="offerAmount">New amount ceiling</label><input
+                                        id="offerAmount" class="input" type="number" min="1000" max="1000000"
+                                        step="1000" required><small>Enter a number between 1,000 and 1,000,000. The
+                                        currency label is intentionally omitted until your operating jurisdiction is
+                                        confirmed.</small></div><button class="btn primary" type="submit"
+                                    id="saveOfferBtn">Save offer setting →</button>
+                            </form>
+                            <div class="notice">The OTP delivery provider is configured server-side, not here. Keep SMS
+                                credentials and encryption secrets out of the Android app and browser code.</div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </div>
+    </main>
+    <div id="detailModal" class="modal-bg hidden" role="dialog" aria-modal="true">
+        <div class="modal">
+            <div class="modal-top">
+                <div>
+                    <div class="eyebrow">Application review</div>
+                    <h2 id="modalTitle">Application details</h2>
+                    <p id="modalSubtitle" class="muted" style="margin:0">—</p>
+                </div><button class="modal-close" id="closeModal" aria-label="Close">×</button>
+            </div>
+            <div class="modal-content" id="modalContent"></div>
+        </div>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script>
+        const API = '/api/v1'; let token = sessionStorage.getItem('loandesk_admin_token') || '', applications = [], currentDetail = null, toastTimer = null; const $ = id => document.getElementById(id); function escapeHtml(s) {return String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]))} function fmtDate(s) {if (!s) return '—'; try {return new Date(s).toLocaleString()} catch (e) {return s} } function shortId(s) {return String(s || '').slice(0, 8).toUpperCase()} function toast(msg, error = false) {const t = $('toast'); t.textContent = msg; t.className = 'toast show' + (error ? ' error' : ''); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.className = 'toast', 3600)} function setBusy(btn, busy) {if (busy) {btn.dataset.old = btn.innerHTML; btn.disabled = true; btn.innerHTML = 'Please wait…'} else {btn.disabled = false; btn.innerHTML = btn.dataset.old || 'Save'} }
+        async function api(path, opts = {}) {const headers = new Headers(opts.headers || {}); if (token) headers.set('Authorization', 'Bearer ' + token); if (opts.body && !(opts.body instanceof FormData)) headers.set('Content-Type', 'application/json'); const res = await fetch(API + path, {...opts, headers}); if (!res.ok) {let d = {}; try {d = await res.json()} catch (e) { } if (res.status === 401 && token) {logout(false)} throw new Error(d.detail || 'Request failed.')} const type = res.headers.get('content-type') || ''; if (type.includes('application/json')) return res.json(); return res}
+        function logout(show = true) {token = ''; sessionStorage.removeItem('loandesk_admin_token'); $('loginScreen').classList.remove('hidden'); $('appShell').classList.add('hidden'); $('topRight').innerHTML = '<span>Secure operations workspace</span><div class="avatar">A</div>'; if (show) toast('Signed out.')}
+        $('adminLoginForm').addEventListener('submit', async e => {e.preventDefault(); const b = $('adminLoginBtn'); setBusy(b, true); try {const d = await api('/admin/login', {method: 'POST', body: JSON.stringify({username: $('adminUser').value.trim(), password: $('adminPass').value})}); token = d.access_token; sessionStorage.setItem('loandesk_admin_token', token); $('loginScreen').classList.add('hidden'); $('appShell').classList.remove('hidden'); $('topRight').innerHTML = '<span>Administrator</span><div class="avatar">A</div><button class="btn ghost" id="signOut" style="padding:7px 10px">Sign out</button>'; $('signOut').addEventListener('click', () => logout()); await loadOverview(); await loadApplications();} catch (err) {toast(err.message, true)} finally {setBusy(b, false)} });
+        function nav(page) {['overview', 'applications', 'audit', 'settings'].forEach(p => $(p + 'Page').classList.toggle('hidden', p !== page)); document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.page === page)); if (page === 'overview') loadOverview(); if (page === 'applications') loadApplications(); if (page === 'audit') loadAudit(); if (page === 'settings') loadSettings()}; document.querySelectorAll('.nav-btn').forEach(b => b.addEventListener('click', () => nav(b.dataset.page)));
+        function statusBadge(s) {return `<span class="status ${escapeHtml(s)}">${escapeHtml((s || '').replaceAll('_', ' '))}</span>`}
+        function appRow(a, recent = false) {const id = escapeHtml(a.id); return `<tr><td><span class="id">LD-${escapeHtml(shortId(a.id))}</span></td><td>${escapeHtml(a.phone_masked || '—')}</td><td>${statusBadge(a.status)}</td><td>${Number(a.offer_amount || 0).toLocaleString('en-US')}</td>${recent ? '' : `<td>${escapeHtml(a.pan_masked || '—')}</td>`}<td>${a.account_saved ? `<span style="color:#10825c;font-weight:800">Saved</span>` : '<span style="color:#8b96a8">Not added</span>'}</td><td>${escapeHtml(fmtDate(a.created_at))}</td><td><button class="btn soft open-detail" data-id="${id}">Review →</button></td></tr>`}
+        function bindOpenButtons(container) {container.querySelectorAll('.open-detail').forEach(b => b.addEventListener('click', () => openDetail(b.dataset.id)))}
+        async function loadOverview() {try {const d = await api('/admin/overview'); $('statTotal').textContent = d.total_applications; $('statReview').textContent = d.under_review; $('statApproved').textContent = d.approved; $('statOtp').textContent = d.otp_verification_attempts_24h; $('currentOffer').textContent = 'Up to ' + Number(d.offer_amount).toLocaleString('en-US'); $('offerAmount').value = d.offer_amount; const r = await api('/admin/applications?limit=8'); $('recentRows').innerHTML = r.applications.map(a => appRow(a, true)).join(''); $('recentEmpty').classList.toggle('hidden', r.applications.length > 0); $('recentRows').parentElement.parentElement.classList.toggle('hidden', r.applications.length === 0); bindOpenButtons($('recentRows'))} catch (e) {toast(e.message, true)} }
+        async function loadApplications() {try {const status = $('statusFilter').value; const d = await api('/admin/applications?limit=300' + (status ? '&status=' + encodeURIComponent(status) : '')); applications = d.applications; filterApps()} catch (e) {toast(e.message, true)} }
+        function filterApps() {const q = $('appSearch').value.toLowerCase().trim(); const rows = applications.filter(a => [a.id, a.phone_masked, a.status].some(v => String(v || '').toLowerCase().includes(q))); $('appRows').innerHTML = rows.map(a => appRow(a, false)).join(''); $('appsEmpty').classList.toggle('hidden', rows.length > 0); bindOpenButtons($('appRows'))}
+        $('statusFilter').addEventListener('change', loadApplications); $('appSearch').addEventListener('input', filterApps); $('reloadApps').addEventListener('click', loadApplications); $('recentRefresh').addEventListener('click', loadOverview); $('overviewRefresh').addEventListener('click', loadOverview); $('overviewApplications').addEventListener('click', () => nav('applications'));
+        async function loadAudit() {try {const d = await api('/admin/otp-audit?limit=100'); $('auditRows').innerHTML = d.events.map(ev => `<tr><td>${escapeHtml(fmtDate(ev.created_at))}</td><td>${escapeHtml(ev.phone_masked)}</td><td>${escapeHtml(ev.event.replaceAll('_', ' '))}</td><td>${statusBadge(ev.outcome === 'verified' ? 'approved' : ev.outcome === 'incorrect' ? 'rejected' : 'needs_information')} <span style="font-size:10px">${escapeHtml(ev.outcome)}</span></td><td class="id">${escapeHtml(ev.challenge_id ? shortId(ev.challenge_id) : '—')}</td><td>${escapeHtml(ev.ip_address || '—')}</td></tr>`).join(''); $('auditEmpty').classList.toggle('hidden', d.events.length > 0)} catch (e) {toast(e.message, true)} } $('reloadAudit').addEventListener('click', loadAudit);
+        async function loadSettings() {try {const c = await api('/public/config'); $('currentOffer').textContent = 'Up to ' + Number(c.max_offer_amount).toLocaleString('en-US'); $('offerAmount').value = c.max_offer_amount} catch (e) {toast(e.message, true)} } $('offerForm').addEventListener('submit', async e => {e.preventDefault(); const b = $('saveOfferBtn'); setBusy(b, true); try {const amount = Number($('offerAmount').value); await api('/admin/settings/offer', {method: 'PATCH', body: JSON.stringify({offer_amount: amount})}); $('currentOffer').textContent = 'Up to ' + amount.toLocaleString('en-US'); toast('Offer ceiling updated.');} catch (err) {toast(err.message, true)} finally {setBusy(b, false)} });
+        function downloadBlob(blob, name) {const url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2500)} async function exportCsv(path, name) {try {const res = await api(path); downloadBlob(await res.blob(), name); toast('Export downloaded.')} catch (e) {toast(e.message, true)} } $('exportApps').addEventListener('click', () => exportCsv('/admin/export/applications.csv', 'loandesk-applications.csv')); $('exportAudit').addEventListener('click', () => exportCsv('/admin/export/otp-audit.csv', 'loandesk-otp-audit.csv'));
+        async function openDetail(id) {try {const d = await api('/admin/applications/' + encodeURIComponent(id)); currentDetail = d; $('modalTitle').textContent = 'Application LD-' + shortId(d.id); $('modalSubtitle').textContent = 'Submitted ' + fmtDate(d.created_at) + ' · ' + (d.phone_masked || ''); const docs = []; if (d.selfie_available) docs.push(['Selfie', 'selfie']); if (d.pan_image_available) docs.push(['PAN / ID card', 'pan']); $('modalContent').innerHTML = `<div class="detail-grid"><div class="detail"><div class="key">Application status</div><div class="value">${statusBadge(d.status)}</div></div><div class="detail"><div class="key">Potential amount ceiling</div><div class="value">${Number(d.offer_amount).toLocaleString('en-US')}</div></div><div class="detail"><div class="key">Mobile</div><div class="value">${escapeHtml(d.phone_masked)}</div></div><div class="detail"><div class="key">PAN / ID number</div><div class="value">${escapeHtml(d.pan_masked || '—')}</div></div><div class="detail"><div class="key">Account</div><div class="value">${d.account ? escapeHtml(d.account.account_number_masked) : 'Not added'}</div></div><div class="detail"><div class="key">Liveness</div><div class="value"><span class="flag">Manual review required</span><div class="inline-note">Photo upload is not automated liveness verification.</div></div></div></div><div class="head-actions" style="margin-top:14px"><button class="btn ghost" id="revealSensitive">Reveal sensitive details</button><button class="btn ghost" id="loadDocs">Load identity images</button></div><div id="revealedSensitive" class="reveal-box hidden"></div><div id="docGrid" class="doc-grid"></div><div class="review-area"><h3 style="margin:0 0 12px;font-size:14px">Manual decision</h3><label for="reviewStatus">Status</label><select id="reviewStatus" class="input"><option value="under_review">Under review</option><option value="needs_information">Needs information</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select><div style="margin-top:13px"><label for="reviewNote">Review note (visible to the customer in their dashboard)</label><textarea id="reviewNote" class="input" maxlength="2000" placeholder="Add a clear note for the customer or reviewer…"></textarea></div><div class="review-controls"><label>Offer amount for this application<input id="reviewAmount" class="input" type="number" min="0" max="10000000" step="1000"></label><label>Current application status<input class="input" value="${escapeHtml(d.status)}" readonly></label></div><div style="display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap"><button class="btn ghost" id="cancelReview">Close</button><button class="btn primary" id="saveReview">Save review decision →</button></div><p class="inline-note">Approval in this portal records a manual status; it does not disburse funds or replace required lender, identity, affordability or regulatory checks.</p></div>`; $('reviewStatus').value = d.status; $('reviewNote').value = d.review_note || ''; $('reviewAmount').value = d.offer_amount; $('detailModal').classList.remove('hidden'); $('cancelReview').addEventListener('click', closeModal); $('revealSensitive').addEventListener('click', () => revealSensitive(d.id)); $('loadDocs').addEventListener('click', () => loadDocs(d)); $('saveReview').addEventListener('click', () => saveReview(d.id));} catch (e) {toast(e.message, true)} }
+        function closeModal() {document.querySelectorAll('#docGrid img[data-object-url]').forEach(img => URL.revokeObjectURL(img.dataset.objectUrl)); $('detailModal').classList.add('hidden'); $('modalContent').innerHTML = ''; currentDetail = null} $('closeModal').addEventListener('click', closeModal); $('detailModal').addEventListener('click', e => {if (e.target === $('detailModal')) closeModal()}); document.addEventListener('keydown', e => {if (e.key === 'Escape') closeModal()});
+        async function revealSensitive(id) {const purpose = prompt('Enter a reason for viewing full identity/bank details (this access is audited):', 'Application review'); if (!purpose || purpose.trim().length < 5) {toast('Enter a reason of at least 5 characters.', true); return } try {const d = await api('/admin/applications/' + encodeURIComponent(id) + '/reveal', {method: 'POST', body: JSON.stringify({purpose: purpose.trim()})}); const box = $('revealedSensitive'); box.classList.remove('hidden'); box.innerHTML = `<strong>Restricted details · access recorded</strong><br>PAN / ID: ${escapeHtml(d.pan_number || '—')}<br>Account holder: ${escapeHtml(d.account?.account_holder || '—')}<br>Bank: ${escapeHtml(d.account?.bank_name || '—')}<br>Account number: ${escapeHtml(d.account?.account_number || '—')}<br>Routing / branch code: ${escapeHtml(d.account?.routing_code || '—')}<br><span class="inline-note">Reason: ${escapeHtml(d.purpose)}</span>`} catch (e) {toast(e.message, true)} }
+        async function loadDocs(d) {const box = $('docGrid'); box.innerHTML = '<div class="inline-note">Loading protected images…</div>'; try {let html = ''; for (const [label, kind] of [['Selfie', 'selfie'], ['PAN / ID card', 'pan']]) {const available = kind === 'selfie' ? d.selfie_available : d.pan_image_available; if (!available) continue; const res = await api('/admin/documents/' + encodeURIComponent(d.id) + '/' + kind); const blob = await res.blob(); const url = URL.createObjectURL(blob); html += `<div class="doc-box"><h4>${label}</h4><img src="${url}" alt="${label}" data-object-url="${url}"></div>`} box.innerHTML = html || '<div class="inline-note">No images are attached.</div>'} catch (e) {box.innerHTML = ''; toast(e.message, true)} }
+        async function saveReview(id) {const b = $('saveReview'); setBusy(b, true); try {await api('/admin/applications/' + encodeURIComponent(id), {method: 'PATCH', body: JSON.stringify({status: $('reviewStatus').value, review_note: $('reviewNote').value, offer_amount: Number($('reviewAmount').value)})}); toast('Application review saved.'); closeModal(); await loadOverview(); await loadApplications()} catch (e) {toast(e.message, true)} finally {setBusy(b, false)} }
+        if (token) {$('loginScreen').classList.add('hidden'); $('appShell').classList.remove('hidden'); $('topRight').innerHTML = '<span>Administrator</span><div class="avatar">A</div><button class="btn ghost" id="signOut" style="padding:7px 10px">Sign out</button>'; document.getElementById('signOut').addEventListener('click', () => logout()); loadOverview(); loadApplications()}
+    </script>
+</body>
+
+</html>

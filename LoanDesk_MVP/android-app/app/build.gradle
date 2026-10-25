@@ -1,0 +1,33 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.loandesk.app'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.loandesk.app'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1.0.0'
+        def appUrl = project.findProperty('APP_URL') ?: 'https://replace-with-your-domain.example/app'
+        buildConfigField 'String', 'APP_URL', '"' + appUrl.toString().replace('"', '\\"') + '"'
+    }
+
+    buildFeatures { buildConfig true }
+    buildTypes {
+        debug { applicationIdSuffix '.debug' }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions { jvmTarget = '17' }
+}
