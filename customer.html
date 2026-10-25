@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#101e3a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="LoanDesk">
+    <link rel="manifest" href="/static/manifest.webmanifest">
+    <link rel="icon" type="image/png" href="/static/icon-192.png">
+    <title>LoanDesk — Borrower Portal</title>
+    <style>
+        :root {
+            --navy: #101e3a;
+            --navy2: #1b3154;
+            --teal: #12b8a6;
+            --teal-dark: #078f83;
+            --ink: #18243a;
+            --muted: #718096;
+            --line: #e6ebf2;
+            --bg: #f4f7fb;
+            --white: #fff;
+            --amber: #f1a53a;
+            --red: #c74455;
+            --green: #138a65;
+            --shadow: 0 22px 60px rgba(18, 35, 66, .11)
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            min-height: 100vh
+        }
+
+        .topbar {
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 max(20px, calc((100vw - 1160px)/2));
+            background: #fff;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .brand {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            font-weight: 800;
+            letter-spacing: -.5px;
+            color: var(--navy);
+            font-size: 21px
+        }
+
+        .mark {
+            width: 38px;
+            height: 38px;
+            border-radius: 13px;
+            background: linear-gradient(135deg, #17375d, #10b9a5);
+            display: grid;
+            place-items: center;
+            color: white;
+            font-size: 19px;
+            box-shadow: 0 8px 18px #12b8a633
+        }
+
+        .top-caption {
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .shell {
+            max-width: 1160px;
+            margin: 30px auto;
+            padding: 0 20px
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+            gap: 28px;
+            align-items: stretch
+        }
+
+        .hero {
+            min-height: 510px;
+            border-radius: 28px;
+            padding: 42px;
+            background: radial-gradient(circle at 90% 15%, #276a79 0, transparent 34%), linear-gradient(145deg, #101e3a, #1c3458 66%, #0c665f);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow)
+        }
+
+        .hero:after {
+            content: "";
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            border: 1px solid #ffffff20;
+            border-radius: 50%;
+            right: -145px;
+            bottom: -150px;
+            box-shadow: 0 0 0 38px #ffffff08, 0 0 0 78px #ffffff06
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2.2px;
+            color: #7de4d7;
+            font-weight: 800
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 4vw, 48px);
+            line-height: 1.12;
+            letter-spacing: -1.6px;
+            max-width: 410px;
+            margin: 20px 0 17px
+        }
+
+        .hero p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #d6e3f0;
+            max-width: 410px;
+            margin: 0
+        }
+
+        .hero .offer {
+            margin-top: 35px;
+            padding: 20px 22px;
+            border: 1px solid #ffffff24;
+            background: #ffffff0d;
+            border-radius: 18px;
+            max-width: 365px;
+            position: relative;
+            z-index: 1
+        }
+
+        .offer-label {
+            font-size: 12px;
+            color: #b6cbdc
+        }
+
+        .offer-amount {
+            font-size: 31px;
+            font-weight: 800;
+            letter-spacing: -.8px;
+            margin-top: 5px
+        }
+
+        .offer-note {
+            font-size: 11px;
+            color: #b6cbdc;
+            margin-top: 6px;
+            line-height: 1.5
+        }
+
+        .perks {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+            color: #e3eff7;
+            font-size: 12px
+        }
+
+        .perks span {
+            display: flex;
+            align-items: center;
+            gap: 7px
+        }
+
+        .tick {
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            display: inline-grid;
+            place-items: center;
+            background: #12b8a633;
+            color: #70e3d4;
+            font-weight: 900
+        }
+
+        .form-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            padding: 34px;
+            box-shadow: var(--shadow);
+            min-height: 510px;
+            display: flex;
+            flex-direction: column
+        }
+
+        .form-card h2 {
+            font-size: 25px;
+            letter-spacing: -.7px;
+            margin: 7px 0 8px;
+            color: var(--navy)
+        }
+
+        .sub {
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--muted);
+            margin: 0 0 26px
+        }
+
+        .mini-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--teal-dark);
+            letter-spacing: 1.3px;
+            text-transform: uppercase
+        }
+
+        .mini-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--teal);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #12b8a618
+        }
+
+        .field {
+            margin: 0 0 17px
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            color: #48566e;
+            font-weight: 750;
+            margin-bottom: 8px
+        }
+
+        .input {
+            width: 100%;
+            border: 1px solid #dbe2ec;
+            border-radius: 13px;
+            padding: 14px 15px;
+            font: inherit;
+            font-size: 14px;
+            color: var(--ink);
+            outline: none;
+            background: #fbfcfe;
+            transition: .18s
+        }
+
+        .input:focus {
+            border-color: var(--teal);
+            box-shadow: 0 0 0 4px #12b8a618;
+            background: #fff
+        }
+
+        .help {
+            font-size: 11px;
+            color: #8994a6;
+            margin-top: 7px;
+            line-height: 1.5
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 13px;
+            padding: 14px 18px;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform .16s, box-shadow .16s, background .16s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            text-decoration: none
+        }
+
+        .btn:hover {
+            transform: translateY(-1px)
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #12b8a6, #078f83);
+            color: white;
+            box-shadow: 0 10px 20px #12b8a62c
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 13px 25px #12b8a644
+        }
+
+        .btn-dark {
+            background: var(--navy);
+            color: #fff
+        }
+
+        .btn-soft {
+            background: #edf5f6;
+            color: #087c73
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: #52627a;
+            border: 1px solid var(--line)
+        }
+
+        .full {
+            width: 100%
+        }
+
+        .split-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px
+        }
+
+        .split-actions>* {
+            flex: 1
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #a1aaba;
+            font-size: 11px;
+            margin: 22px 0
+        }
+
+        .divider:before,
+        .divider:after {
+            content: "";
+            height: 1px;
+            background: var(--line);
+            flex: 1
+        }
+
+        .trust {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            border-radius: 13px;
+            padding: 13px;
+            background: #f6fafb;
+            margin-top: auto;
+            color: #627185;
+            font-size: 11px;
+            line-height: 1.55
+        }
+
+        .trust-ico {
+            width: 28px;
+            height: 28px;
+            border-radius: 9px;
+            background: #dff6f2;
+            color: #078f83;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .otp-input {
+            letter-spacing: 9px;
+            font-size: 24px;
+            font-weight: 800;
+            text-align: center;
+            padding: 16px
+        }
+
+        .brandline {
+            height: 1px;
+            background: var(--line);
+            margin: 24px 0
+        }
+
+        .tiny-footer {
+            max-width: 1160px;
+            margin: 20px auto 32px;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            color: #8c97a9;
+            font-size: 11px;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            padding: 13px 17px;
+            border-radius: 12px;
+            background: #172844;
+            color: #fff;
+            font-size: 13px;
+            box-shadow: var(--shadow);
+            transition: .25s;
+            z-index: 99;
+            max-width: calc(100vw - 30px)
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0)
+        }
+
+        .toast.error {
+            background: #9f2938
+        }
+
+        .app-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px
+        }
+
+        .pill {
+            border-radius: 999px;
+            padding: 7px 10px;
+            background: #eaf7f4;
+            color: #087c73;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .7px;
+            white-space: nowrap
+        }
+
+        .pill.review {
+            background: #fff4df;
+            color: #9e6508
+        }
+
+        .pill.approved {
+            background: #e4f8ee;
+            color: #0b8059
+        }
+
+        .pill.rejected {
+            background: #ffe9ec;
+            color: #b32e42
+        }
+
+        .dash-kicker {
+            color: #8a97aa;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase
+        }
+
+        .dash-amount {
+            font-size: 33px;
+            font-weight: 850;
+            color: var(--navy);
+            letter-spacing: -1px;
+            margin: 8px 0 4px
+        }
+
+        .status-card {
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 18px;
+            margin: 20px 0;
+            background: linear-gradient(130deg, #fff, #f8fbfd)
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px
+        }
+
+        .status-desc {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--muted);
+            margin-top: 12px
+        }
+
+        .step-row {
+            display: flex;
+            gap: 9px;
+            margin: 18px 0 22px
+        }
+
+        .step {
+            height: 5px;
+            flex: 1;
+            border-radius: 10px;
+            background: #e8edf3
+        }
+
+        .step.done {
+            background: var(--teal)
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 11px;
+            color: #67758a;
+            line-height: 1.6;
+            margin: 8px 0 18px
+        }
+
+        .checkbox-row input {
+            margin-top: 2px;
+            accent-color: var(--teal)
+        }
+
+        .upload-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .upload-box {
+            border: 1.5px dashed #c9d5e3;
+            border-radius: 15px;
+            padding: 17px 13px;
+            background: #fbfcfe
+        }
+
+        .upload-box .up-icon {
+            font-size: 22px;
+            margin-bottom: 8px
+        }
+
+        .upload-box strong {
+            font-size: 12px;
+            display: block
+        }
+
+        .upload-box small {
+            display: block;
+            color: #8994a6;
+            font-size: 10px;
+            line-height: 1.5;
+            margin: 6px 0 10px
+        }
+
+        .upload-box input {
+            width: 100%;
+            font-size: 11px
+        }
+
+        .small-link {
+            background: none;
+            border: 0;
+            color: #078f83;
+            font-weight: 800;
+            font: inherit;
+            font-size: 12px;
+            cursor: pointer
+        }
+
+        .loader {
+            width: 15px;
+            height: 15px;
+            border: 2px solid #ffffff65;
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .7s linear infinite
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .simple-list {
+            padding: 0;
+            margin: 16px 0 0;
+            list-style: none
+        }
+
+        .simple-list li {
+            display: flex;
+            gap: 9px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eef1f5;
+            font-size: 12px;
+            color: #59677d
+        }
+
+        .simple-list li:last-child {
+            border-bottom: 0
+        }
+
+        .list-check {
+            color: var(--teal-dark);
+            font-weight: 900
+        }
+
+        @media(max-width:850px) {
+            .shell {
+                margin: 18px auto
+            }
+
+            .layout {
+                grid-template-columns: 1fr;
+                gap: 16px
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 27px;
+                border-radius: 23px
+            }
+
+            .hero h1 {
+                font-size: 34px;
+                margin-top: 14px
+            }
+
+            .hero .offer {
+                margin-top: 24px
+            }
+
+            .perks {
+                margin-top: 18px
+            }
+
+            .form-card {
+                min-height: 450px;
+                padding: 25px;
+                border-radius: 23px
+            }
+
+            .topbar {
+                height: 65px
+            }
+
+            .top-caption {
+                display: none
+            }
+
+            .tiny-footer {
+                margin-top: 15px
+            }
+        }
+
+        @media(max-width:420px) {
+            .upload-grid {
+                grid-template-columns: 1fr
+            }
+
+            .hero h1 {
+                font-size: 31px
+            }
+
+            .form-card {
+                padding: 22px
+            }
+
+            .split-actions {
+                flex-direction: column
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <div class="mark">L</div><span>LoanDesk</span>
+        </div>
+        <div class="top-caption">A simpler way to manage your loan request</div>
+    </header>
+    <main class="shell">
+        <div class="layout">
+            <section class="hero">
+                <div class="eyebrow">Clear steps. Human review.</div>
+                <h1>Move forward with confidence.</h1>
+                <p>Start your request securely, share the required details, and follow your application status in one
+                    place.</p>
+                <div class="offer">
+                    <div class="offer-label">Potential finance amount</div>
+                    <div class="offer-amount" id="heroOffer">Up to 50,000</div>
+                    <div class="offer-note">Eligibility, final amount, terms and approval depend on verification and
+                        review. No amount is guaranteed.</div>
+                </div>
+                <div class="perks"><span><i class="tick">✓</i> Secure sign-in</span><span><i class="tick">✓</i>
+                        Application tracking</span><span><i class="tick">✓</i> Manual review</span></div>
+            </section>
+            <section class="form-card">
+                <div id="loginPanel">
+                    <div class="mini-tag"><i class="mini-dot"></i> CUSTOMER ACCESS</div>
+                    <h2>Welcome back</h2>
+                    <p class="sub">Enter your mobile number. We’ll send a one-time verification code to confirm it’s
+                        you.</p>
+                    <form id="phoneForm">
+                        <div class="field"><label for="phone">Mobile number</label><input class="input" id="phone"
+                                name="phone" type="tel" autocomplete="tel" placeholder="+92 3XX XXXXXXX" required
+                                minlength="10" maxlength="20">
+                            <div class="help">Include your country code, for example +92 or +91.</div>
+                        </div><button class="btn btn-primary full" id="getOtpBtn" type="submit">Get OTP
+                            <span>→</span></button>
+                    </form>
+                    <div class="divider">SECURE ACCESS</div>
+                    <div class="trust">
+                        <div class="trust-ico">⌑</div>
+                        <div><strong>Your privacy matters.</strong><br>We use a short-lived verification code. Never
+                            share your code with anyone, including people claiming to represent the company.</div>
+                    </div>
+                </div>
+                <div id="otpPanel" class="hidden">
+                    <div class="mini-tag"><i class="mini-dot"></i> PHONE VERIFICATION</div>
+                    <h2>Check your messages</h2>
+                    <p class="sub" id="otpSentCopy">Enter the six-digit code sent to your mobile number.</p>
+                    <form id="otpForm">
+                        <div class="field"><label for="otp">Six-digit verification code</label><input
+                                class="input otp-input" id="otp" inputmode="numeric" autocomplete="one-time-code"
+                                pattern="[0-9]{6}" maxlength="6" placeholder="••••••" required></div><button
+                            class="btn btn-primary full" id="verifyBtn" type="submit">Verify & continue
+                            <span>→</span></button>
+                    </form>
+                    <div class="split-actions"><button class="btn btn-ghost" type="button" id="changeNumber">Change
+                            number</button><button class="btn btn-soft" type="button" id="resendOtp">Resend
+                            code</button></div>
+                    <div class="trust" style="margin-top:26px">
+                        <div class="trust-ico">◷</div>
+                        <div>Codes expire after a short period and can only be used once. If you did not request a code,
+                            you can safely ignore the message.</div>
+                    </div>
+                </div>
+                <div id="homePanel" class="hidden">
+                    <div class="app-head">
+                        <div>
+                            <div class="mini-tag"><i class="mini-dot"></i> YOUR ACCOUNT</div>
+                            <h2 style="margin-top:8px">Your dashboard</h2>
+                            <p class="sub" style="margin-bottom:0">Welcome. Keep track of your request here.</p>
+                        </div><button class="small-link" id="logoutBtn" type="button">Sign out</button>
+                    </div>
+                    <div class="brandline"></div>
+                    <div class="dash-kicker">Potential finance amount</div>
+                    <div class="dash-amount" id="dashOffer">Up to 50,000</div>
+                    <p class="sub" style="margin:0">Final eligibility and terms are subject to identity checks and
+                        manual review.</p>
+                    <div class="status-card">
+                        <div class="status-row"><strong>Application status</strong><span class="pill"
+                                id="statusPill">Not started</span></div>
+                        <div class="status-desc" id="statusDesc">Start your request by submitting the required identity
+                            documents.</div>
+                        <ul class="simple-list" id="statusSteps">
+                            <li><span class="list-check">✓</span> Verify your mobile number</li>
+                            <li><span class="list-check">○</span> Submit identity documents</li>
+                            <li><span class="list-check">○</span> Add account details</li>
+                            <li><span class="list-check">○</span> Wait for review</li>
+                        </ul>
+                    </div>
+                    <div id="homeActions" class="split-actions"><button class="btn btn-primary" id="applyBtn"
+                            type="button">Start application →</button><button class="btn btn-ghost" id="refreshBtn"
+                            type="button">Refresh status</button></div>
+                    <div id="reviewActions" class="split-actions hidden"><button class="btn btn-primary" id="accountBtn"
+                            type="button">Account details →</button><button class="btn btn-ghost" id="refreshBtn2"
+                            type="button">Refresh status</button></div>
+                    <div class="trust">
+                        <div class="trust-ico">⌑</div>
+                        <div>Only share details requested on this official page. We’ll show your status as the team
+                            reviews your request.</div>
+                    </div>
+                </div>
+                <div id="kycPanel" class="hidden">
+                    <div class="app-head">
+                        <div>
+                            <div class="mini-tag"><i class="mini-dot"></i> IDENTITY CHECK</div>
+                            <h2>Verify your identity</h2>
+                        </div><button class="small-link" id="backHome1" type="button">← Back</button>
+                    </div>
+                    <p class="sub">Upload a clear selfie and your PAN/card image. The review team will check the
+                        submitted images.</p>
+                    <div class="step-row"><i class="step done"></i><i class="step done"></i><i class="step"></i></div>
+                    <form id="kycForm">
+                        <div class="field"><label for="panNumber">PAN / identity card number</label><input class="input"
+                                id="panNumber" name="pan_number" autocomplete="off" required minlength="5"
+                                maxlength="30" placeholder="Enter the number on your card"></div>
+                        <div class="upload-grid">
+                            <div class="upload-box">
+                                <div class="up-icon">▣</div><strong>Live selfie photo</strong><small>Use a clear,
+                                    well-lit photo with your face visible.</small><input id="selfieFile" type="file"
+                                    accept="image/*" capture="user" required>
+                            </div>
+                            <div class="upload-box">
+                                <div class="up-icon">▤</div><strong>PAN / ID card image</strong><small>Make sure the
+                                    name and number are readable.</small><input id="panFile" type="file"
+                                    accept="image/*" capture="environment" required>
+                            </div>
+                        </div><label class="checkbox-row"><input id="consent" type="checkbox" required><span>I consent
+                                to the secure collection and review of these identity documents for this loan request. I
+                                understand the images and details will be available to authorised review
+                                staff.</span></label><button class="btn btn-primary full" id="submitKycBtn"
+                            type="submit">Submit for review →</button>
+                    </form>
+                    <div class="trust" style="margin-top:17px">
+                        <div class="trust-ico">i</div>
+                        <div>A selfie upload is not, by itself, an automated liveness check. Live-presence verification
+                            must be completed by an approved provider or by the authorised review process.</div>
+                    </div>
+                </div>
+                <div id="accountPanel" class="hidden">
+                    <div class="app-head">
+                        <div>
+                            <div class="mini-tag"><i class="mini-dot"></i> PAYMENT ACCOUNT</div>
+                            <h2>Account details</h2>
+                        </div><button class="small-link" id="backHome2" type="button">← Back</button>
+                    </div>
+                    <p class="sub">Add the account details requested by the review team. Your information is encrypted
+                        in storage.</p>
+                    <form id="accountForm">
+                        <div class="field"><label for="holder">Account holder name</label><input id="holder"
+                                class="input" required minlength="2" maxlength="120" placeholder="Name on the account"
+                                autocomplete="name"></div>
+                        <div class="field"><label for="bankName">Bank name</label><input id="bankName" class="input"
+                                required minlength="2" maxlength="120" placeholder="Bank or payment provider"></div>
+                        <div class="field"><label for="accountNumber">Account number</label><input id="accountNumber"
+                                class="input" required minlength="5" maxlength="50" inputmode="numeric"
+                                autocomplete="off" placeholder="Enter account number"></div>
+                        <div class="field"><label for="routingCode">Routing / branch code <span
+                                    style="font-weight:400;color:#9aa4b3">(if applicable)</span></label><input
+                                id="routingCode" class="input" maxlength="40" autocomplete="off" placeholder="Optional">
+                        </div><button class="btn btn-primary full" id="saveAccountBtn" type="submit">Save account
+                            details →</button>
+                    </form>
+                    <div class="trust" style="margin-top:18px">
+                        <div class="trust-ico">⌑</div>
+                        <div>Account information is visible only to authorised administrators and is not included in the
+                            standard CSV export.</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="tiny-footer"><span>© <span id="year"></span> LoanDesk</span><span>Secure access · Manual application
+            review</span><span>Need help? Contact your loan provider.</span></footer>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script>
+        const API = '/api/v1'; let challengeId = null, activePhone = '', accessToken = sessionStorage.getItem('loandesk_token') || '', currentApplication = null, toastTimer = null;
+        const $ = id => document.getElementById(id); function toast(msg, error = false) {const t = $('toast'); t.textContent = msg; t.className = 'toast show' + (error ? ' error' : ''); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.className = 'toast', 3600)}
+        function showPanel(name) {['login', 'otp', 'home', 'kyc', 'account'].forEach(n => $(n + 'Panel').classList.toggle('hidden', n !== name))}
+        async function api(path, opts = {}) {const headers = new Headers(opts.headers || {}); if (accessToken) headers.set('Authorization', 'Bearer ' + accessToken); if (opts.body && !(opts.body instanceof FormData)) headers.set('Content-Type', 'application/json'); const res = await fetch(API + path, {...opts, headers}); let data = {}; try {data = await res.json()} catch (e) { } if (!res.ok) {if (res.status === 401 && accessToken) {logout(false)} throw new Error(data.detail || 'Something went wrong. Please try again.')} return data}
+        function setBusy(button, busy, label) {if (busy) {button.dataset.old = button.innerHTML; button.disabled = true; button.innerHTML = '<span class="loader"></span> Please wait'} else {button.disabled = false; button.innerHTML = button.dataset.old || label} }
+        function statusWords(s) {return ({under_review: ['Under review', 'review', 'Your request is in the review queue. The team will check your documents and the information you submitted.'], needs_information: ['More information needed', 'review', 'The review team needs additional information. Please contact support for the next step.'], approved: ['Approved', 'approved', 'Your request has been approved. Please follow the instructions shared by the provider for the next steps.'], rejected: ['Not approved', 'rejected', 'Your request was not approved at this time. Contact the provider if you need clarification.']})[s] || ['Not started', '', 'Start your request by submitting the required identity documents.']}
+        async function requestCode(phone) {const btn = $('getOtpBtn'); setBusy(btn, true); try {const d = await api('/auth/request-otp', {method: 'POST', body: JSON.stringify({phone})}); challengeId = d.challenge_id; activePhone = phone; $('otpSentCopy').textContent = 'Enter the six-digit code sent to ' + phone + '. It expires in five minutes.'; $('otp').value = ''; showPanel('otp'); $('otp').focus(); toast('Verification code requested.')} catch (e) {toast(e.message, true)} finally {setBusy(btn, false)} }
+        $('phoneForm').addEventListener('submit', e => {e.preventDefault(); requestCode($('phone').value.trim())}); $('changeNumber').addEventListener('click', () => showPanel('login')); $('resendOtp').addEventListener('click', () => requestCode(activePhone));
+        $('otpForm').addEventListener('submit', async e => {e.preventDefault(); const btn = $('verifyBtn'); setBusy(btn, true); try {const d = await api('/auth/verify-otp', {method: 'POST', body: JSON.stringify({challenge_id: challengeId, otp: $('otp').value.trim()})}); accessToken = d.access_token; sessionStorage.setItem('loandesk_token', accessToken); await refreshDashboard(); toast('You are signed in.')} catch (err) {toast(err.message, true)} finally {setBusy(btn, false)} });
+        function logout(notify = true) {accessToken = ''; currentApplication = null; sessionStorage.removeItem('loandesk_token'); showPanel('login'); if (notify) toast('You have signed out.')}
+        $('logoutBtn').addEventListener('click', () => logout());
+        function renderApplication(app) {currentApplication = app; const active = !!app; const status = active ? app.status : null; const [title, cls, desc] = statusWords(status); $('statusPill').textContent = title; $('statusPill').className = 'pill ' + cls; $('statusDesc').textContent = active ? (app.review_note || desc) : desc; $('dashOffer').textContent = 'Up to ' + Number(app?.offer_amount || window.loanDeskConfig?.max_offer_amount || 50000).toLocaleString('en-US'); $('homeActions').classList.toggle('hidden', active && status !== 'rejected'); $('reviewActions').classList.toggle('hidden', !active || status === 'rejected'); $('applyBtn').textContent = active && status === 'rejected' ? 'Start a new application →' : 'Start application →'; $('applyBtn').disabled = false; $('applyBtn').onclick = () => showPanel('kyc'); const steps = $('statusSteps'); if (!active) {steps.innerHTML = '<li><span class="list-check">✓</span> Verify your mobile number</li><li><span class="list-check">○</span> Submit identity documents</li><li><span class="list-check">○</span> Add account details</li><li><span class="list-check">○</span> Wait for review</li>'; return } steps.innerHTML = '<li><span class="list-check">✓</span> Mobile number verified</li><li><span class="list-check">✓</span> Identity documents submitted</li><li><span class="list-check">' + (app.account_saved ? '✓' : '○') + '</span> Account details ' + (app.account_saved ? 'saved' : 'not added') + '</li><li><span class="list-check">' + (status === 'approved' ? '✓' : '○') + '</span> ' + title + '</li>'; if (status === 'rejected') {$('homeActions').classList.remove('hidden'); $('applyBtn').disabled = false; $('applyBtn').textContent = 'Start a new application →'; $('applyBtn').onclick = () => showPanel('kyc')} }
+        async function refreshDashboard() {const me = await api('/me'); const cfg = await api('/public/config'); window.loanDeskConfig = cfg; $('heroOffer').textContent = 'Up to ' + Number(cfg.max_offer_amount).toLocaleString('en-US'); const details = await api('/application/me'); const app = details.application || me.application; renderApplication(app); if (details.application?.account) {$('holder').value = details.application.account.account_holder || ''; $('bankName').value = details.application.account.bank_name || ''} showPanel('home')}
+        $('refreshBtn').addEventListener('click', async () => {try {await refreshDashboard(); toast('Status refreshed.')} catch (e) {toast(e.message, true)} }); $('refreshBtn2').addEventListener('click', async () => {try {await refreshDashboard(); toast('Status refreshed.')} catch (e) {toast(e.message, true)} }); $('backHome1').addEventListener('click', () => showPanel('home')); $('accountBtn').addEventListener('click', () => showPanel('account')); $('backHome2').addEventListener('click', () => showPanel('home'));
+        $('kycForm').addEventListener('submit', async e => {e.preventDefault(); const btn = $('submitKycBtn'); if (!$('selfieFile').files[0] || !$('panFile').files[0]) {toast('Please add both images.', true); return } const fd = new FormData(); fd.append('pan_number', $('panNumber').value.trim()); fd.append('consent', $('consent').checked ? 'true' : 'false'); fd.append('selfie', $('selfieFile').files[0]); fd.append('pan_image', $('panFile').files[0]); setBusy(btn, true); try {await api('/application/kyc', {method: 'POST', body: fd}); $('kycForm').reset(); await refreshDashboard(); toast('Documents submitted for review.')} catch (err) {toast(err.message, true)} finally {setBusy(btn, false)} });
+        $('accountForm').addEventListener('submit', async e => {e.preventDefault(); const btn = $('saveAccountBtn'); setBusy(btn, true); try {await api('/application/account', {method: 'POST', body: JSON.stringify({account_holder: $('holder').value.trim(), bank_name: $('bankName').value.trim(), account_number: $('accountNumber').value.trim(), routing_code: $('routingCode').value.trim()})}); $('accountNumber').value = ''; $('routingCode').value = ''; await refreshDashboard(); toast('Account details saved securely.')} catch (err) {toast(err.message, true)} finally {setBusy(btn, false)} });
+        $('year').textContent = new Date().getFullYear(); (async () => {try {const cfg = await api('/public/config'); window.loanDeskConfig = cfg; $('heroOffer').textContent = 'Up to ' + Number(cfg.max_offer_amount).toLocaleString('en-US'); $('dashOffer').textContent = 'Up to ' + Number(cfg.max_offer_amount).toLocaleString('en-US')} catch (e) { } if (accessToken) {try {await refreshDashboard()} catch (e) {logout(false)} } })();
+    </script>
+</body>
+
+</html>
